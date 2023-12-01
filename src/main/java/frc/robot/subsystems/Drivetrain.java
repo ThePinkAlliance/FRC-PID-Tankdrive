@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
-  TalonSRX frontLeft;
-  TalonSRX backLeft;
-  TalonSRX frontRight;
-  TalonSRX backRight;
+  private TalonSRX frontLeft;
+  private TalonSRX backLeft;
+  private TalonSRX frontRight;
+  private TalonSRX backRight;
+
+  private double circumference;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -26,6 +28,8 @@ public class Drivetrain extends SubsystemBase {
     this.backRight.follow(frontRight);
 
     this.frontLeft.setInverted(true);
+
+    this.circumference = (2 * Math.PI * (5.875 / 2));
   }
 
   public void setSpeeds(double left, double right) {
@@ -35,14 +39,13 @@ public class Drivetrain extends SubsystemBase {
 
   public double getLeftPosition() {
     /*
-     * (2 * Math.PI * (5.875 / 2)) Its the wheel circumference. Note: I forgot to
-     * add the units per rotation for the encoder.
+     * Note: I forgot to add the units per rotation for the encoder.
      */
-    return (this.frontLeft.getSelectedSensorPosition() * (1 / 600)) * (2 * Math.PI * (5.875 / 2));
+    return ((this.frontLeft.getSelectedSensorPosition() / 600) / 2048) * circumference;
   }
 
   public double getRightPosition() {
-    return (this.frontRight.getSelectedSensorPosition() * (1 / 600)) * (2 * Math.PI * (5.875 / 2));
+    return ((this.frontRight.getSelectedSensorPosition() / 600) / 2048) * circumference;
   }
 
   public void resetLeft() {
