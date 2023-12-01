@@ -34,6 +34,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftPosition() {
+    /*
+     * (2 * Math.PI * (5.875 / 2)) Its the wheel circumference. Note: I forgot to
+     * add the units per rotation for the encoder.
+     */
     return (this.frontLeft.getSelectedSensorPosition() * (1 / 600)) * (2 * Math.PI * (5.875 / 2));
   }
 
